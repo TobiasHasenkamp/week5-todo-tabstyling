@@ -7,10 +7,12 @@ import Search from "./components/Search";
 import useSearch from "./hooks/useSearch";
 import {
     Switch,
-    Route
+    Route,
+    useParams
 } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Delete from "./components/Delete";
+import SimpleTabs from "./components/TabPanel";
 
 export default function App() {
     const [todos, create, remove, advance] = useTodos();
@@ -19,43 +21,25 @@ export default function App() {
 
     return (
         <Main>
+
             <Header>
                 <h1>Super Kanban Board </h1>
                 <AddTodo onAdd={create} />
                 <Search search={search} onChange={setSearch}/>
-                <NavBar/>
+                {/*<NavBar/>*/}
             </Header>
             <Switch>
                 <Board>
-                    <Route exact path={["/", "/open"]}>
-                        <TodoList
-                            status="OPEN"
-                            todos={filteredTodos}
-                            onDelete={remove}
-                            onAdvance={advance}
-                            setIdToDelete={setIdToDelete}
-                        />
-                    </Route>
-                    <Route exact path={["/", "/in-progress"]}>
-                        <TodoList
-                            status="IN_PROGRESS"
-                            todos={filteredTodos}
-                            onDelete={remove}
-                            onAdvance={advance}
-                            setIdToDelete={setIdToDelete}
-                        />
-                    </Route>
-                    <Route exact path={["/", "/done"]}>
-                        <TodoList
-                            status="DONE"
-                            todos={filteredTodos}
-                            onDelete={remove}
-                            onAdvance={advance}
-                            setIdToDelete={setIdToDelete}
-                        />
-                    </Route>
-                    <Route exact path={"/delete"}>
+                    <Route path={"/delete"}>
                         <Delete id={idToDelete} onDelete={remove}/>
+                    </Route>
+
+                    <Route exact path={"/"}>
+                        <SimpleTabs
+                            todos={filteredTodos}
+                            onDelete={remove}
+                            onAdvance={advance}
+                            setIdToDelete={setIdToDelete}/>
                     </Route>
                 </Board>
             </Switch>
@@ -75,12 +59,11 @@ const Main = styled.main`
     padding: 8px;
 
     h1 {
-        color: hotpink;
+        color: royalblue;
     }
 `;
 
 const Board = styled.section`
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+
+    gap: 20px;
 `;

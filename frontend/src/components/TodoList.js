@@ -5,13 +5,15 @@ import styled from 'styled-components';
 export default function TodoList({ status, todos, onDelete, onAdvance, setIdToDelete }) {
     const filteredTodos = todos.filter((todo) => todo.status === status);
     return (
-        <StyledList>
-            {filteredTodos.map((todo) => (
-                <li key={todo.id}>
-                    <Todo {...todo} onDelete={onDelete} onAdvance={onAdvance} setIdToDelete={setIdToDelete}/>
-                </li>
-            ))}
-        </StyledList>
+        <div>
+            <StyledList>
+                {filteredTodos.map((todo) => (
+                    <li key={todo.id}>
+                        <Todo {...todo} onDelete={onDelete} onAdvance={onAdvance} setIdToDelete={setIdToDelete}/>
+                    </li>
+                ))}
+            </StyledList>
+        </div>
     );
 }
 

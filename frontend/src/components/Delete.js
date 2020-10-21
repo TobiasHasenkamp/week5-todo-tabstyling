@@ -1,26 +1,25 @@
 import React from "react";
-import { useHistory, Redirect } from "react-router-dom";
+import {useHistory, Redirect, useParams} from "react-router-dom";
 
 export default function Delete({id, onDelete}) {
 
     const history = useHistory();
+    const {slug} = useParams();
 
-    const goBackHandler = () => {
-        history.goBack()
+    function goBackHandler() {
+        history.goBack();
     }
 
-    const deleteHandler = (id) => {
+    function deleteHandler(id) {
         onDelete(id)
-        return(
-            <Redirect to="/"/>
-        )
+        history.push("/");
     }
 
     return(
         <div>
-            <p>Do you want to delete this item?</p>
-            <button onClick={goBackHandler}>go back</button>
-            <button onClick={deleteHandler(id)}>delete</button>
+            <div>Do you want to delete {slug}?</div>
+            <button onClick={() => goBackHandler()}>go back</button>
+            <button onClick={() => deleteHandler(id)}>delete</button>
         </div>
     );
 }
