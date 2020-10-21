@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Link} from "react-router-dom";
 
-export default function Todo({ id, status, description, onDelete, onAdvance }) {
+export default function Todo({ id, status, description, onAdvance }) {
     return (
         <StyledTodo>
             <h3>
@@ -15,7 +16,9 @@ export default function Todo({ id, status, description, onDelete, onAdvance }) {
                         Advance
                     </button>
                 )}
-                <button onClick={() => onDelete(id)}>Delete</button>
+                <Link to={"/delete"}>
+                    <button>Delete</button>
+                </Link>
             </ButtonGroup>
         </StyledTodo>
     );

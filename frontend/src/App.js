@@ -5,6 +5,12 @@ import useTodos from './hooks/useTodos';
 import AddTodo from './components/AddTodo';
 import Search from "./components/Search";
 import useSearch from "./hooks/useSearch";
+import {
+    Switch,
+    Route
+} from "react-router-dom";
+import NavBar from "./components/NavBar";
+import Delete from "./components/Delete";
 
 export default function App() {
     const [todos, create, remove, advance] = useTodos();
@@ -16,27 +22,39 @@ export default function App() {
                 <h1>Super Kanban Board </h1>
                 <AddTodo onAdd={create} />
                 <Search search={search} onChange={setSearch}/>
+                <NavBar/>
             </Header>
-            <Board>
-                <TodoList
-                    status="OPEN"
-                    todos={filteredTodos}
-                    onDelete={remove}
-                    onAdvance={advance}
-                />
-                <TodoList
-                    status="IN_PROGRESS"
-                    todos={filteredTodos}
-                    onDelete={remove}
-                    onAdvance={advance}
-                />
-                <TodoList
-                    status="DONE"
-                    todos={filteredTodos}
-                    onDelete={remove}
-                    onAdvance={advance}
-                />
-            </Board>
+            <Switch>
+                <Board>
+                    <Route exact path={["/", "/open"]}>
+                        <TodoList
+                            status="OPEN"
+                            todos={filteredTodos}
+                            onDelete={remove}
+                            onAdvance={advance}
+                        />
+                    </Route>
+                    <Route exact path={["/", "/in-progress"]}>
+                        <TodoList
+                            status="IN_PROGRESS"
+                            todos={filteredTodos}
+                            onDelete={remove}
+                            onAdvance={advance}
+                        />
+                    </Route>
+                    <Route exact path={["/", "/done"]}>
+                        <TodoList
+                            status="DONE"
+                            todos={filteredTodos}
+                            onDelete={remove}
+                            onAdvance={advance}
+                        />
+                    </Route>
+                    <Route exact path={"/delete"}>
+                        <Delete/>
+                    </Route>
+                </Board>
+            </Switch>
         </Main>
     );
 }
