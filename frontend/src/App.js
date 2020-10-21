@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components/macro';
 import TodoList from './components/TodoList';
 import useTodos from './hooks/useTodos';
@@ -15,6 +15,7 @@ import Delete from "./components/Delete";
 export default function App() {
     const [todos, create, remove, advance] = useTodos();
     const [search, setSearch, filteredTodos] = useSearch(todos);
+    const [idToDelete, setIdToDelete] = useState();
 
     return (
         <Main>
@@ -32,6 +33,7 @@ export default function App() {
                             todos={filteredTodos}
                             onDelete={remove}
                             onAdvance={advance}
+                            setIdToDelete={setIdToDelete}
                         />
                     </Route>
                     <Route exact path={["/", "/in-progress"]}>
@@ -40,6 +42,7 @@ export default function App() {
                             todos={filteredTodos}
                             onDelete={remove}
                             onAdvance={advance}
+                            setIdToDelete={setIdToDelete}
                         />
                     </Route>
                     <Route exact path={["/", "/done"]}>
@@ -48,10 +51,11 @@ export default function App() {
                             todos={filteredTodos}
                             onDelete={remove}
                             onAdvance={advance}
+                            setIdToDelete={setIdToDelete}
                         />
                     </Route>
                     <Route exact path={"/delete"}>
-                        <Delete/>
+                        <Delete id={idToDelete} onDelete={remove}/>
                     </Route>
                 </Board>
             </Switch>

@@ -2,7 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import {Link} from "react-router-dom";
 
-export default function Todo({ id, status, description, onAdvance }) {
+export default function Todo({ id, status, description, onAdvance, setIdToDelete }) {
+
+
+
     return (
         <StyledTodo>
             <h3>
@@ -17,7 +20,7 @@ export default function Todo({ id, status, description, onAdvance }) {
                     </button>
                 )}
                 <Link to={"/delete"}>
-                    <button>Delete</button>
+                    <button onClick={() => setIdToDelete(id)}>Delete</button>
                 </Link>
             </ButtonGroup>
         </StyledTodo>
